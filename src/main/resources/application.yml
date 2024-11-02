@@ -1,0 +1,13 @@
+server:
+  port: 8091
+spring:
+  application:
+    name: cards
+  datasource:
+    url: jdbc:mysql://localhost:3360/cards
+    username: root
+    password: magento
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
