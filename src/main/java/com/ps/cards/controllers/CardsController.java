@@ -1,5 +1,6 @@
 package com.ps.cards.controllers;
 
+import com.ps.cards.config.ApiConfig;
 import com.ps.cards.constants.CardsConstants;
 import com.ps.cards.dto.CardsDto;
 import com.ps.cards.dto.ResponseDto;
@@ -13,13 +14,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
-@AllArgsConstructor
 @Validated
 public class CardsController {
 
-    private CardsServiceInterface cardsService;
+    private final CardsServiceInterface cardsService;
+    private final ApiConfig apiConfig;
+
+    public CardsController(
+        CardsServiceInterface cardsService,
+        ApiConfig apiConfig
+    ) {
+       this.cardsService = cardsService;
+       this.apiConfig = apiConfig;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createCard(@Valid @RequestParam
@@ -68,5 +79,16 @@ public class CardsController {
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(CardsConstants.STATUS_417, CardsConstants.MESSAGE_417_DELETE));
         }
+    }
+
+    @GetMapping("/version")
+    public ResponseEntity<Map<String, String>> buildVersion()
+    {
+        String version = this.apiConfig.getVersion();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        Map.of("version", version)
+                );
     }
 }
