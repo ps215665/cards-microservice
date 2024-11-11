@@ -7,7 +7,6 @@ import com.ps.cards.dto.ResponseDto;
 import com.ps.cards.services.CardsServiceInterface;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
